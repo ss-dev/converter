@@ -1,0 +1,7 @@
+.idea/
+*~
+*.log
+*.pyc
+*.sqlite3
+.env/
+converter/env.py
