@@ -1,0 +1,71 @@
+{% load static from staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Currency Converter</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="nowrap">
+        <input type="number" id="from_amount" value="1" min="0" class="api-trigger">
+        <select id="from_currency" class="api-trigger">
+            {% for key, value in CURRENCIES.items %}
+            <option {% if key == CURRENCY_FROM %}selected="1"{% endif %} value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="nowrap">
+        <input type="number" id="to_amount" disabled readonly="readonly" value="" min="0">
+        <select id="to_currency" class="api-trigger">
+            {% for key, value in CURRENCIES.items %}
+            <option {% if key == CURRENCY_TO %}selected="1"{% endif %} value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+</div>
+
+<script>
+    function updateForm() {
+        // Check amount
+        if ( $('#from_amount').val() < 0 ) {
+            $('#to_amount').val('');
+            return
+        }
+
+        // Call exchange API
+        $.ajax({
+            url: '/api/exchange/' + $('#from_amount').val() + '/' +
+                 $('#from_currency').val() + '/' +
+                 $('#to_currency').val() + '/'
+        })
+        .done(function(res) {
+            console.log(JSON.stringify(res));
+            $('#to_amount').val(res['to_amount']);
+        })
+        .fail(function(res) {
+            console.log(JSON.stringify(res));
+            $('#to_amount').val('');
+        });
+    }
+
+    $('#from_amount').keypress(function() {
+        updateForm();
+    });
+    $('.api-trigger').change(function() {
+        updateForm();
+    });
+
+    $(function() {
+        updateForm();
+    });
+</script>
+
+</body>
+</html>

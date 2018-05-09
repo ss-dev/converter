@@ -1,0 +1,21 @@
+
+input[type=number], select {
+    weight: 140px;
+    height: 20px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 6px;
+}
+
+.container {
+    width: 290px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}

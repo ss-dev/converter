@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+APPEND_SLASH = True
+
 
 # Application definition
 
@@ -60,7 +62,9 @@ ROOT_URLCONF = 'converter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,6 +129,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 
 # Logging
 
@@ -173,6 +181,9 @@ CURRENCIES = {
     'CZK': 'Czech Republic Koruna',
     'PLN': 'Polish Zloty',
 }
+
+DEFAULT_CURRENCY_FROM = 'CZK'
+DEFAULT_CURRENCY_TO = 'USD'
 
 DECIMAL_PREC = 9
 
