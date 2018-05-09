@@ -10,6 +10,18 @@ from rates.utils import get_rates
 
 @api_view()
 def exchange_from_to(request, amount, from_currency, to_currency):
+    """
+    API endpoint for currency conversion.
+
+    Example
+
+    Request:
+    `$ curl http://127.0.0.1:8000/api/exchange/1000/CZK/USD/`
+
+    Response:
+    `{"from_currency":"CZK","to_currency":"USD","from_amount":1000.0,"to_amount":46.3401049}`
+
+    """
     rates = get_rates()
     if not rates:
         return Response(
