@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rates.apps.RatesConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +121,62 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] %(asctime)s %(message)s'
+        },
+        'simple': {
+            'format': '[%(levelname)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'DEBUG',
+        'propagate': True,
+    },
+}
+
+
+# General site settings
+
+CURRENCIES = {
+    'USD': 'United States Dollar',
+    'EUR': 'Euro',
+    'CZK': 'Czech Republic Koruna',
+    'PLN': 'Polish Zloty',
+}
+
+DECIMAL_PREC = 9
+
+
+# Settings for the rates app
+
+OXR_APP_ID = os.environ['OXR_APP_ID']
+OXR_BASE_CURRENCY = 'USD'
+OXR_SYMBOLS = 'USD,EUR,CZK,PLN'
+OXR_URL = 'https://openexchangerates.org/api/latest.json?app_id={}&base={}&symbols={}'.format(
+    OXR_APP_ID, OXR_BASE_CURRENCY, OXR_SYMBOLS
+)
+
+STORAGE_PATH = os.path.join(BASE_DIR, 'data', 'rates.json')
+STORAGE_CACHE_KEY = 'rates_data'
+STORAGE_CACHE_TIME = 2 * 24 * 60 * 60

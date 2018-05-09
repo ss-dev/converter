@@ -3,5 +3,8 @@
 *.log
 *.pyc
 *.sqlite3
+.coverage
 .env/
 converter/env.py
+data/rates.json
+rates/tests/rates.json

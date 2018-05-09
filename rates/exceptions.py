@@ -1,0 +1,3 @@
+
+class OXRException(BaseException):
+    pass
