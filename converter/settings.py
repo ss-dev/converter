@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+
     'rates.apps.RatesConfig',
+    'exchange.apps.ExchangeConfig',
 ]
 
 MIDDLEWARE = [
@@ -153,6 +156,12 @@ LOGGING = {
         'level': 'DEBUG',
         'propagate': True,
     },
+}
+
+
+# Django REST Framework
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 
